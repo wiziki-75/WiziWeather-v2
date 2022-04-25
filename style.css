@@ -1,0 +1,141 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,700;1,900&display=swap');
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 200vh;
+  font-size: 1.5rem;
+  background-color: #222222;
+  font-family: Quicksand;
+}
+
+*{
+  margin: 0;
+  padding: 0;
+}
+
+/* Style the video: 100% width and height to cover the entire window */
+#myVideo {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+}
+
+/* Add some content at the bottom of the video/page */
+.content {
+  margin-top: 100px;
+  background: #1e20227c;
+  width: 100%;
+  background-size: cover;
+  position: relative;
+  bottom: -1000px;
+}
+
+/* Style the button used to pause/play the video */
+#myBtn {
+  width: 200px;
+  font-size: 18px;
+  padding: 10px;
+  border-radius: 4px;
+  background: #1d375a;
+  color: #fff;
+  cursor: pointer;
+}
+
+#title {
+  padding: 0;
+  margin: 0;
+  font-size: 40px;
+  text-align: center;
+  text-transform: uppercase;
+  text-shadow: 0 0 2px #000000;
+}
+
+.f1 {
+  margin-top: 25px;
+  text-align: center;
+  padding: 35px;
+}
+
+.form__field {
+  position: relative;
+  width: 10px;
+  font-size: 15px;
+  color: #000000;
+  border:none;
+  padding: 7px 0;
+  background: transparent;
+  background-size: cover;
+}
+
+#cv {
+  width: 46%;
+  display: block;
+  margin-left: 27%;
+  font-size: 30px;
+  text-align: center;
+}
+
+
+.tab {
+  font-size: 38px;
+  display: inline-block;
+  vertical-align: top;
+  color: rgb(235, 220, 220);
+}
+
+#temp1 {
+  text-align: center;
+  font-size: 80px;
+}
+
+#info {
+  color: #b3abab;
+  text-align: center;
+  text-shadow: 0 0 2px #000000;
+}
+
+#searchBox {
+  border-radius: 55px;
+  padding: 30px;
+  margin-bottom: 100px;
+  /* background: #293677; */
+  position: absolute;
+  display: flex;
+  align-items: center;
+  box-shadow: 6px 6px 10px -1px rgba(0,0,0,0.15),
+  -6px -6px 10px -1px rgba(255,255,255,0.7);
+}
+
+#googleIcon {
+  width: 50px;
+  cursor: pointer;
+}
+
+#btnm {
+  text-align: center;
+}
+
+#details {
+  text-align: center;
+  color: rgb(235, 220, 220);
+  margin-bottom: 60px;
+  font-size: 30px;
+}
+
+#details2 {
+  text-align: center;
+  color: rgb(235, 220, 220);
+  margin-bottom: 60px;
+  font-size: 35px;
+}
+
+footer {
+  color: rgb(180, 177, 173);
+  text-align: center;
+}

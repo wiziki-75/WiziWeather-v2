@@ -1,0 +1,51 @@
+v2.1 :
+
+- Add style.css
+- Changing color and fix the style
+- Change Title (WiziWeather)
+
+v2.2 :
+
+- Jquery update to 3.6.0
+- New and animated background (video)
+- Some CSS change
+
+v2.3 :
+
+- Add animation (slide) to #temp1 and #preview
+- Change button class
+- Add auto scroll down
+- Add more details about the actual weather (Humidity, Pressure, Visibility, Wind)
+
+v2.4 : 
+- Add option to change from Metric to Imperial system and reverse 
+- Timezone fix
+
+v2.5 :
+- Add hypertext link to openweathermap.org in the footer
+- Add sunrise / sunset preview
+- CSS modification #details #details2
+- Add some icons
+- Some text modification
+
+v2.5.1 : 
+- Add links on footer to LinkedIn dev profile
+- Add footer css property to style.css
+- Remove some useless js code
+
+v2.6 (10/09/2021) :
+- Change visibility icon
+- For US cities, display is automaticily in imperial
+- Sunrise and sunset hours preview are now only available for France
+- Add a link on the footer to the changelog
+- Fix bug with the hourly preview (x.5h)
+- Remove auto-scroll
+
+v2.6.1 (13/09/2021) :
+- Fix bug with sunrise/sunset preview with the Metric and Imperial buttons
+- Switch sunrise and sunset preview to AM/PM (19:00 -> 7 PM) for Metric or Imperial
+- Fix spacing in Daily column
+
+v2.6.2 (14/10/2021) :
+- Change #info text
+- Remove so comments
