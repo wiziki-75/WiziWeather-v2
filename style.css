@@ -139,3 +139,10 @@ footer {
   color: rgb(180, 177, 173);
   text-align: center;
 }
+
+#report{
+  position: fixed;
+  bottom: 10px;
+  left: 52%;
+  margin-left: -104.5px;
+}

@@ -2,10 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>WiziWeather v2.6.2</title>
+    <title>WiziWeather v2.6.3</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="function.js"></script>
+    <script src="index.js" defer></script>
 
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
@@ -72,256 +72,17 @@
             <div id="b1" class="tab"></div>
         </div>
     </div><br><br>
+    <button id="report" class="btn btn-primary" onclick="location.href = 'mailto: anthony.guerrand92@gmail.com'">REPORT A BUG</button>
 
-    <footer><p>Developped by <a href="https://www.linkedin.com/in/anthony-guerrand-172b26213/" >Anthony G.</a> and <a href="https://www.linkedin.com/in/madany-balde-891b95195/" >Madany B.</a>, (This website use <a href="https://openweathermap.org/">OpenWeather API</a>)<br><a href="changelog.txt">changelog</a></p></footer><br>
+    <footer>
+      <p>Developped by <a href="https://www.linkedin.com/in/anthony-guerrand-172b26213/" target="_blank">Anthony G.</a>
+         with the helped of 
+         <a href="https://www.linkedin.com/in/madany-balde-891b95195/" target="_blank">Madany B.</a>
+         , (This website use <a href="https://openweathermap.org/" target="_blank">OpenWeather API</a>
+         )<br>
+         <a href="changelog.txt" target="_blank">changelog</a>
+      </p>
+    </footer><br>
 
   </body>
-
-  <script>
-setTimeout(function(){ window.scrollTo(0,document.body.scrollHeight) }, 00)  
-
-$('#details').hide()
-$('#details2').hide()
-$('#preview').hide()
-$('#temp1').hide()
-
-$('#title').css({
-  color: '#'+(Math.random()*0xFFFFFF<<0).toString(16)
-})
-
-$('#btn').on('click', function(event){
-    event.preventDefault()
-    $("body").scrollTop($("#temp1").offset().top)
-    $('#f1').css({border: '#1f1d1d solid 8px'})
-    
-    const apikey = '78fda43046110923760a56e85042272e'
-    const city = $("#cv").val()
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apikey}`
-
-    $.ajax({
-        url: url,
-        method: 'GET'
-    })
-    .done(function(data){
-        console.log(data)
-        const data1 = {
-            temperature : Math.round(data.main.temp),
-            iconURL : `https://openweathermap.org/img/w/${data.weather[0].icon}.png`,
-            humidity: data.main.humidity,
-            pressure: data.main.pressure,
-            visibility: data.visibility,
-            windeg: data.wind.deg,
-            windspeed: data.wind.speed,
-            lat : data.coord.lat,
-            lon : data.coord.lon,
-            w : data.weather[0].main,
-            tz : data.timezone,
-            sunrise : data.sys.sunrise,
-            sunset : data.sys.sunset,
-            country : data.sys.country
-        }
-
-        Timezone = data1.tz / 3600
-
-        $('#info').text('(You have to click on "clear" before entering a new city name)')
-
-        const url2 = `https://api.openweathermap.org/data/2.5/onecall?lat=${data1.lat}&lon=${data1.lon}&exclude=daily&units=metric&appid=${apikey}`
-        const url3 = `https://api.openweathermap.org/data/2.5/onecall?lat=${data1.lat}&lon=${data1.lon}&exclude=hourly&units=metric&appid=${apikey}`
-
-        const icon = {
-          h : '<img width="50" height="50" src="icon/humidity.png">',
-          p : '<img width="50" height="50" src="icon/pressure.jpg">',
-          v : '<img width="50" height="50" src="https://openweathermap.org/img/w/50d.png">',
-          w : '<img width="50" height="50" src="icon/wind.png">',
-          sr : '<img width="50" height="50" src="icon/sunrise.png">',
-          ss : '<img width="50" height="50" src="icon/sunset.png">',
-        }
-
-        miVisi = Math.round((data1.visibility * 0.001) * 0.62137)
-
-        if(data1.country == 'US'){
-          $('#temp1').html(`<div style="color:${tempColor(data1.temperature)}">${Math.round(data1.temperature / 5 * 9 + 32) + '°F'}</div><img class="tab pic" width="80" height="80" src="${data1.iconURL}">`)
-          $('#details').html(`${icon.h} ${data1.humidity}% / ${icon.p} ${Math.round((data1.pressure * 0.030) * 100) / 100} inHg / ${icon.v} ${visiDef2(miVisi)}mi / ${icon.w} ${windeg(data1.windeg)} / ${Math.round(data1.windspeed * 0.621371)} mph`)
-        } else {
-          $('#temp1').html(`<div style="color:${tempColor(data1.temperature)}">${data1.temperature}°C</div><img class="tab pic" width="80" height="80" src="${data1.iconURL}">`)
-          $('#details').html(`<div>${icon.h} ${data1.humidity}% / ${icon.p} ${data1.pressure} hPa / ${icon.v} ${visiDef(data1.visibility)} / ${icon.w} ${windeg(data1.windeg)} / ${Math.round(data1.windspeed)} Km/h</div>`)
-        }
-
-        if(data.sys.country == 'FR'){
-          $('#details2').html(`${icon.sr} ${convertUnixDate(data1.sunrise)} AM / ${icon.ss} ${convertUnixDate(data1.sunset, 1)} PM`)
-        }
-
-    $.ajax({
-        url: url2,
-        method: 'GET'
-    })
-    .done(function(data){
-        console.log(data)
-
-        UTC2 = hour.getHours() + Timezone - 2
-        if(UTC2 > 23){
-          UTC2 -= 24
-        }
-
-        for(let i = 0; i < data.hourly.length;i++){
-            const data2 = {
-                temperature : Math.round(data.hourly[i].temp),
-                iconURL : `http://openweathermap.org/img/w/${data.hourly[i].weather[0].icon}.png`,
-            }
-
-            if(UTC2 > 23){
-                UTC2 = 0
-            }
-            if(data1.country == 'US'){
-              $('#a1').append(`<pre><div class="tab prev1">${(UTC2++)}h </div><div class="tab" style="color:${tempColor(data2.temperature)}">${Math.round(data2.temperature / 5 * 9 + 32) + '°F'}</div><img class="tab pic" src="${data2.iconURL}"></pre>`)
-            } else {
-              $('#a1').append(`<pre><div class="tab prev1">${Math.round(UTC2++)}h </div><div class="tab" style="color:${tempColor(data2.temperature)}">${data2.temperature}°C</div><img class="tab pic" src="${data2.iconURL}"></pre>`)
-            }
-        }
-        
-        $('#btn4').on('click', function(event){
-          $('#temp1').html(`<div style="color:${tempColor(data1.temperature)}">${Math.round(data1.temperature / 5 * 9 + 32) + '°F'}</div><img class="tab pic" width="80" height="80" src="${data1.iconURL}">`)
-          event.preventDefault()
-          $('#a1').empty()
-
-          var UTC2 = hour.getHours() + Timezone - 2
-          if(UTC2 > 23){
-            UTC2 -= 24
-          }
-
-          for(let i = 0; i < data.hourly.length;i++){
-            const data2 = {
-                temperature : Math.round(data.hourly[i].temp),
-                iconURL : `http://openweathermap.org/img/w/${data.hourly[i].weather[0].icon}.png`,
-            }
-
-            if(UTC2 > 23){
-                UTC2 = 0
-            }
-
-            $('#a1').append(`<pre><div class="tab prev1">${(UTC2++)}h </div><div class="tab" style="color:${tempColor(data2.temperature)}">${Math.round(data2.temperature / 5 * 9 + 32) + '°F'}</div><img class="tab pic" src="${data2.iconURL}"></pre>`)
-          }
-
-        })
-
-        $('#btn3').on('click', function(event){
-          event.preventDefault()
-          $('#a1').empty()
-
-          var UTC2 = hour.getHours() + Timezone - 2
-          if(UTC2 > 23){
-            UTC2 -= 24
-          }
-
-          for(let i = 0; i < data.hourly.length;i++){
-            const data2 = {
-                temperature : Math.round(data.hourly[i].temp),
-                iconURL : `http://openweathermap.org/img/w/${data.hourly[i].weather[0].icon}.png`,
-            }
-
-            if(UTC2 > 23){
-                UTC2 = 0
-            }
-
-            $('#a1').append(`<pre><div class="tab prev1">${(UTC2++)}h </div><div class="tab" style="color:${tempColor(data2.temperature)}">${data2.temperature}°C</div><img class="tab pic" src="${data2.iconURL}"></pre>`)
-          }
-
-          $('#details').html(`<div>${icon.h} ${data1.humidity}% / ${icon.p} ${data1.pressure} hPa / ${icon.v} ${visiDef(data1.visibility)} / ${icon.w} ${windeg(data1.windeg)} / ${Math.round(data1.windspeed)} Km/h</div>`)
-        })
-    })
-
-    $.ajax({
-        url: url3,
-        method: 'GET'
-    })
-    .done(function(data){
-        console.log(data)
-
-        for(let k = 0; k < data.daily.length;k++){
-            const data3 = {
-                temperature1 : Math.round(data.daily[k].temp.min),
-                temperature2 : Math.round(data.daily[k].temp.max),
-                iconURL : `http://openweathermap.org/img/w/${data.daily[k].weather[0].icon}.png`,
-            }
-
-            if(UTC3 + 1 > 7){
-                UTC3 = 0
-            }
-
-            if(data1.country == 'US'){
-              $('#b1').append(`<pre><div class="tab">${utcday((UTC3++) + 1)} </div><div class="tab" style="color:${tempColor(data3.temperature1)}">${Math.round(data3.temperature1 / 5 * 9 + 32) + '°F'}</div><div class="tab"> - </div><div class="tab" style="color:${tempColor(data3.temperature2)}">${Math.round(data3.temperature2 / 5 * 9 + 32) + '°F'}</div><img class="tab pic" src="${data3.iconURL}"></pre>`)
-            } else {
-              $('#b1').append(`<pre><div class="tab">${utcday((UTC3++) + 1)} </div><div class="tab" style="color:${tempColor(data3.temperature1)}">${data3.temperature1}°C</div><div class="tab"> - </div><div class="tab" style="color:${tempColor(data3.temperature2)}">${data3.temperature2}°C </div><img class="tab pic" src="${data3.iconURL}"></pre>`)
-            }
-        }
-
-        $('#btn4').on('click', function(event){
-          event.preventDefault()
-          $('#temp1').html(`<div style="color:${tempColor(data1.temperature)}">${Math.round(data1.temperature / 5 * 9 + 32) + '°F'}</div><img class="tab pic" width="80" height="80" src="${data1.iconURL}">`)
-          $('#b1').empty()
-
-          UTC3 = hour.getDay()
-
-          for(let k = 0; k < data.daily.length;k++){
-            const data3 = {
-                temperature1 : Math.round(data.daily[k].temp.min),
-                temperature2 : Math.round(data.daily[k].temp.max),
-                iconURL : `http://openweathermap.org/img/w/${data.daily[k].weather[0].icon}.png`,
-            }
-
-            if(UTC3 + 1 > 7){
-                UTC3 = 0
-            }
-
-            $('#b1').append(`<pre><div class="tab">${utcday((UTC3++) + 1)} </div><div class="tab" style="color:${tempColor(data3.temperature1)}">${Math.round(data3.temperature1 / 5 * 9 + 32) + '°F'}</div><div class="tab"> - </div><div class="tab" style="color:${tempColor(data3.temperature2)}">${Math.round(data3.temperature2 / 5 * 9 + 32) + ' °F'}</div><img class="tab pic" src="${data3.iconURL}"></pre>`)
-          }
-
-          miVisi = Math.round((data1.visibility * 0.001) * 0.62137)
-
-          $('#details').html(`${icon.h} ${data1.humidity}% / ${icon.p} ${Math.round((data1.pressure * 0.030) * 100) / 100} inHg / ${icon.v} ${visiDef2(miVisi)}mi / ${icon.w} ${windeg(data1.windeg)} / ${Math.round(data1.windspeed * 0.621371)} mph`)
-        })
-        
-        $('#btn3').on('click', function(event){
-          event.preventDefault()
-          $('#temp1').html(`<div style="color:${tempColor(data1.temperature)}">${data1.temperature}°C</div><img class="tab pic" width="80" height="80" src="${data1.iconURL}">`)
-          $('#b1').empty()
-
-          UTC3 = hour.getDay()
-
-          for(let k = 0; k < data.daily.length;k++){
-            const data3 = {
-                temperature1 : Math.round(data.daily[k].temp.min),
-                temperature2 : Math.round(data.daily[k].temp.max),
-                iconURL : `http://openweathermap.org/img/w/${data.daily[k].weather[0].icon}.png`,
-            }
-
-            if(UTC3 + 1 > 7){
-                UTC3 = 0
-            }
-
-            $('#b1').append(`<pre><div class="tab">${utcday((UTC3++) + 1)} </div><div class="tab" style="color:${tempColor(data3.temperature1)}">${data3.temperature1}°C</div><div class="tab"> - </div><div class="tab" style="color:${tempColor(data3.temperature2)}">${data3.temperature2}°C </div><img class="tab pic" src="${data3.iconURL}"></pre>`)
-          }
-
-        })
-    })
-
-    $("#temp1").slideDown()
-    $("#preview").slideDown()
-    $("#details").slideDown()
-    $("#details2").slideDown()
-
-    })
-    .fail(function(err){
-        console.log(err)
-        alert(`${err.status} ${err.responseJSON.message}`)
-        $('#f1').css({border: 'rgb(182, 28, 28) solid 8px',})
-    })
-})
-$('#btn2').on('click', function(event){
-    event.preventDefault()
-    $("#temp1").slideUp()
-    $("#preview").slideUp()
-    setInterval(function(){ window.location.reload() }, 1000);
-})
-  </script>
 </html>

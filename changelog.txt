@@ -49,3 +49,11 @@ v2.6.1 (13/09/2021) :
 v2.6.2 (14/10/2021) :
 - Change #info text
 - Remove so comments
+
+v2.6.3 (29/06/2022) :
+- Fix timezone bug with hourly data (-h)
+- Remove the main script from the index.html and put it in index.js (finally)
+- Move all function.js content in index.js and remove the file
+- Remove useless functions
+- add some comments
+- add report bug button
